@@ -7,33 +7,34 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "..\..\Set\Set.h"
+#include "..\..\..\Set\Set\Set.h"
 
 #define TAM 100
 
 int main(void) {
+	setbuf(stdout, NULL);
 
 	int numbers[TAM];
-	int n, opcion = 0;
-	setbuf(stdout, NULL);
+	int n, opcion = 0, i = 0;
 
 	Set bst = set_create(compareInts); //binary search tree
 
-	while (opcion != 8) {
-		printf("\nElige una opcion: \n");
-		printf("1. Agregar datos.\n");
-		printf("2. Buscar un dato\n");
-		printf("3. Eliminar un dato\n");
-		printf("4. Imprimir en formato Pre-Orden\n");
-		printf("5. Imprimir en formato In-Orden\n");
-		printf("6. Imprimir en formato Post-Orden\n");
-		printf("7. Eliminar arbol\n");
-		printf("8. Salir\n");
+	while (opcion != 9) {
+		printf("Elige una opcion: \n");
+		printf("1. Crear árbol.\n");
+		printf("2. Agregar un dato\n");
+		printf("3. Buscar un dato\n");
+		printf("4. Eliminar un dato\n");
+		printf("5. Imprimir en formato Pre-Orden\n");
+		printf("6. Imprimir en formato In-Orden\n");
+		printf("7. Imprimir en formato Post-Orden\n");
+		printf("8. Eliminar arbol\n");
+		printf("9. Salir\n");
 		scanf("%d", &opcion);
 
 		switch (opcion) {
 		case 1:
-			for (int i = 0; i < TAM; i++) {
+			for (i = 0; i < TAM; i++) {
 				printf("Dame dato (negativo para salir): ");
 				scanf("%d", &n);
 				if (n < 0)
@@ -43,35 +44,50 @@ int main(void) {
 			}
 			break;
 		case 2:
+			printf("Dato a agregar: ");
+			scanf("%d", &n);
+			i = set_size(bst);
+			numbers[i] = n;
+			if (set_agregar(bst, &numbers[i]))
+				printf("Valor agregado correctamente!\n\n");
+
+			else
+				printf("El valor no se puede agregar!\n\n");
+			break;
+		case 3:
 			printf("Dato a buscar: ");
 			scanf("%d", &n);
 			if (set_containsValue((Type) &n, bst))
-				printf("Valor encontrado\n");
+				printf("Valor encontrado\n\n");
 			else
-				printf("Valor no encontrado\n");
+				printf("Valor no encontrado\n\n");
 			break;
-		case 3:
+		case 4:
 			printf("Dato a eliminar: ");
 			scanf("%d", &n);
 			if (set_removeValue((Type) &n, bst))
-				printf("Valor eliminado\n");
+				printf("Valor eliminado\n\n");
 			else
-				printf("Valor no encontrado\n");
-			break;
-		case 4:
-			printf("\nÁrbol en Pre-orden\n");
-			set_printPreOrder(bst);
+				printf("Valor no encontrado\n\n");
 			break;
 		case 5:
-			printf("\nÁrbol en In-orden\n");
-			set_printInOrder(bst);
+			printf("\nÁrbol en Pre-orden\n");
+			set_printPreOrder(bst);
+			printf("\n\n");
 			break;
 		case 6:
-			printf("\nÁrbol en Post-orden\n");
-			set_printPostOrder(bst);
+			printf("\nÁrbol en In-orden\n");
+			set_printInOrder(bst);
+			printf("\n\n");
 			break;
 		case 7:
-
+			printf("\nÁrbol en Post-orden\n");
+			set_printPostOrder(bst);
+			printf("\n\n");
+			break;
+		case 8:
+			set_destroy(bst);
+			printf("Se ha eliminado el árbol\n\n");
 			break;
 		}
 
