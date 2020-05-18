@@ -46,7 +46,7 @@ int main(void) {
 		case 2:
 			printf("Dato a agregar: ");
 			scanf("%d", &n);
-			i = set_size(bst);
+			i = set_size(bst) + 1;
 			numbers[i] = n;
 			if (set_agregar(bst, &numbers[i]))
 				printf("Valor agregado correctamente!\n\n");
